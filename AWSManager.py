@@ -4,7 +4,7 @@ import boto3
 
 class Events:
     def __init__(self):
-        self.__Tablename__ = "EventDB"
+        self.__Tablename__ = "EventsDB"
         self.client = boto3.client('dynamodb')
         self.DB = boto3.resource('dynamodb')
         self.Primary_Column_Name = "event_id"
@@ -26,9 +26,6 @@ class Events:
                 self.columns[4] : Event_desc,
                 self.columns[5] : Event_image,
                 self.columns[6] : Event_location
-                
-
-
             }
         )
 
