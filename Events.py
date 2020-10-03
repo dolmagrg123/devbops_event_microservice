@@ -14,13 +14,13 @@ def posting():
 def comment():
     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 
-@app.route("/event/diff feature")
-def comment():
-    t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
+# @app.route("/event/diff_feature")
+# def comment():
+#     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 
-@app.route("/event/diff feature")
-def comment():
-    t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
+# @app.route("/event/diff_feature")
+# def comment():
+#     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 
 # @app.route("/viewing", methods= ["GET"])
 # def viewing():
