@@ -10,7 +10,7 @@ def posting():
     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
     
 
-@app.route("/event/rsvp")
+@app.route("/event/rsvp", methods=["POST"])
 def comment():
     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 
