@@ -7,12 +7,12 @@ t1 = Events()
 
 @app.route("/event")
 def posting():
-    t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
+    t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
     
 
 @app.route("/event/rsvp", methods=["POST"])
 def comment():
-    t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
+     t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
 
 # @app.route("/event/diff_feature")
 # def comment():
