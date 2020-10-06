@@ -33,3 +33,4 @@ class Events:
         
 #t1 = events() 
 #t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
+
