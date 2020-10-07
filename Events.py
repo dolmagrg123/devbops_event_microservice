@@ -1,13 +1,13 @@
 from flask import Flask, request
 from AWSManager import Events
  
- 
+event = Events()
 app = Flask(__name__)
-t1 = Events()
 
-@app.route("/event")
+
+@app.route("/create-event", methods=["POST"])
 def create():
-    t1.put(Event_name = "Presentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
+    event.put(Event_name = "Presentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
 
 # @app.route("/event/viewing", methods= ["GET"])
 # def view_event():
@@ -30,4 +30,3 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 
-    

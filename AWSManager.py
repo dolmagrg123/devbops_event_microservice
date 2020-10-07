@@ -139,9 +139,9 @@ class Events:
 
 
         
-t1 = Events() 
+# t1 = Events() 
 #t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 # t1.put("to delete", "leave", "yall", "really", "playying", "with me", "!!")
 # t1.update_event(Event_name = "i wanana",  New_Event_name = "Cams lsiting party", New_Event_date = "10-29-2020", New_Event_time="9:30", New_User = "Abdul", New_Event_desc = "listening paty", New_Event_image = "test12", New_Event_location = "Ny" )
 # t1.delete("to delete")
-t1.check_if_event_exists("to delet")
+# t1.check_if_event_exists("to delet")
