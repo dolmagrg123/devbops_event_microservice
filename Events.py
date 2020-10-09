@@ -4,10 +4,31 @@ from AWSManager import Events
 event = Events()
 app = Flask(__name__)
 
+{
+    "Event_name": {eventname},
+     "Event_date": {date},
+      "Event_time": {time},
+       "User": {userid},
+        "Event_desc": {description},
+         "Event_image": {img},
+          "Event_location": {location}
+}
 
 @app.route("/create-event", methods=["POST"])
 def create():
-    event.put(Event_name = "trPresentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
+    #event.put(Event_name = "trPresentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
+    res = request.json
+    Event_name = res['Event_name']
+    Event_date = res['Event_date']
+    Event_time = res['Event_time']
+    User = res['User']
+    Event_desc = res['Event_desc']
+    Event_image = res['Event_image']
+    Event_location = res['Event_location']
+
+    event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location)
+    
+
 
 # @app.route("/event/viewing", methods= ["GET"])
 # def view_event():
@@ -18,8 +39,8 @@ def create():
 #     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
 
 
-# @app.route("/event/delete", methods=["POST"])
-# def delete_eventç():
+@app.route("/event/delete", methods=["POST"])
+def delete_eventç():
 #      t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
 
 # @app.route("/event/rsvp", methods=["POST"])
@@ -28,5 +49,3 @@ def create():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
