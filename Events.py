@@ -28,9 +28,30 @@ def create():
 
     event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location)
     
+@app.route("/event-delete", methods=["POST"])
+def delete():
+    res = request.json
+    Event_name = res['Event_name']
+    
+    event.delete(Event_name = Event_name)
+
+#not done yet
+@app.route("/event-update", methods=["POST"]) 
+def update():
+    res = request.json
+    New_Event_name = res['New_Event_name']
+    New_Event_date = res['New_Event_date']
+    New_Event_time = res['New_Event_time']
+    New_User = res['New_User']
+    New_Event_desc = res['New_Event_desc']
+    New_Event_image = res['New_Event_image']
+    New_Event_location = res['New_Event_location']
+
+    event.update()
 
 
-# @app.route("/event/viewing", methods= ["GET"])
+
+#@app.route("/event/viewing", methods= ["GET"])
 # def view_event():
 #     return 
 
