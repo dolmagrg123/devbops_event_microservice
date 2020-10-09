@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/create-event", methods=["POST"])
 def create():
-    event.put(Event_name = "Presentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
+    event.put(Event_name = "trPresentation", Event_date = "October 3rd", Event_time = "2pm", User = "Class", Event_desc = "Presenting things", Event_image = "None", Event_location = "Zoom")
 
 # @app.route("/event/viewing", methods= ["GET"])
 # def view_event():

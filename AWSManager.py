@@ -20,7 +20,7 @@ class Events:
         response = self.table.put_item(
             Item = {
                 self.Primary_Column_Name:last_primary_key,
-                self.columns[0]: self.check_if_event_exists(Event_name),
+                self.columns[0]: Event_name,
                 self.columns[1] : Event_date,
                 self.columns[2] : Event_time,
                 self.columns[3] : User,
@@ -51,17 +51,20 @@ class Events:
                 "Error": "event was not created"
             }
 
-    def check_if_event_exists(self, Event_name):
+    def check_if_event_exists(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location):
         response = self.table.scan(
             FilterExpression=Attr("Event_name").eq(Event_name)
         )
         if response["Items"]:
+            print("it exists")
             return {
                 "Result": False,
                 "Error": "Event already exists"
             }
+            
         else:
-            return Event_name
+            self.put(Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location)
+            
 
     def update_event(self, Event_name, New_Event_name, New_Event_date, New_Event_time, New_User,  New_Event_desc,  New_Event_image, New_Event_location ):
         response = self.table.scan(
@@ -128,20 +131,9 @@ class Events:
             }
     
 
-    
+
+t1 = Events()
+t1.check_if_event_exists(Event_name = "maybe this will work", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
+t1.delete("maybe this will work")
 
 
-
-        
-
-
-
-
-
-        
-# t1 = Events() 
-#t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
-# t1.put("to delete", "leave", "yall", "really", "playying", "with me", "!!")
-# t1.update_event(Event_name = "i wanana",  New_Event_name = "Cams lsiting party", New_Event_date = "10-29-2020", New_Event_time="9:30", New_User = "Abdul", New_Event_desc = "listening paty", New_Event_image = "test12", New_Event_location = "Ny" )
-# t1.delete("to delete")
-# t1.check_if_event_exists("to delet")
