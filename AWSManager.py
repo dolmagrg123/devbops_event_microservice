@@ -118,6 +118,8 @@ class Events:
         res = self.table.scan()
         return res['Items']
 
+    def rsvp(self, User):
+        return res
 
 
 t1 = Events()

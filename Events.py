@@ -45,7 +45,11 @@ def view_event():
     res = event.view()
     return res
 
-
+#still a work in progress
+@app.route("/event-rsvp", methods= ["GET"])
+def rsvp():
+    res = event.rsvp()
+    return res
 # @app.route("/event/rsvp", methods=["POST"])
 # def rsvp():
 #      t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
