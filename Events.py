@@ -49,8 +49,6 @@ def update():
 
     event.update()
 
-
-
 #@app.route("/event/viewing", methods= ["GET"])
 # def view_event():
 #     return 
