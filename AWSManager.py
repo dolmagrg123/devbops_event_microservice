@@ -95,7 +95,10 @@ class Events:
             FilterExpression=Attr("event_name").eq(Event_name)
         )
 
-        print(response["Items"])
+        if len(response["Items"]) > 0:
+            print(response["Items"])
+        else:
+            print("item does not exists")
 
 
 
@@ -131,6 +134,6 @@ class Events:
 t1 = Events()
 # t1.check_if_event_exists(Event_name = "cams party", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
 
-t1.delete('maybeee this will work')
+t1.delete('maybee this will work')
 
 
