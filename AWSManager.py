@@ -92,26 +92,31 @@ class Events:
 
     def delete(self, Event_name):
         response = self.table.scan(
-            FilterExpression=Attr("Event_name").eq(Event_name)
+            FilterExpression=Attr("event_name").eq(Event_name)
         )
-        if response["Items"]:
-             self.Primary_key = response["Items"][0]["event_id"]
-             res = self.table.delete_item(
-                 Key={
-                     self.Primary_Column_Name:self.Primary_key
 
-                 }
-             )
-             return {
-                 "Result": True,
-                 "Error": None,
-                 "description": "event was deleted"
-             }
-        else:
-            return {
-                "Result": False,
-                "Error": "Event does not exists"
-            }
+        print(response["Items"])
+
+
+
+        # if response["Items"]:
+        #      self.Primary_key = response["Items"][0]["event_id"]
+        #      res = self.table.delete_item(
+        #          Key={
+        #              self.Primary_Column_Name:self.Primary_key
+
+        #          }
+        #      )
+        #      return {
+        #          "Result": True,
+        #          "Error": None,
+        #          "description": "event was deleted"
+        #      }
+        # else:
+        #     return {
+        #         "Result": False,
+        #         "Error": "Event does not exists"
+        #     }
     
 
     def Last_insert_into_(self):
