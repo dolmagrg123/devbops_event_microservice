@@ -60,8 +60,10 @@ class Events:
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
-        print(response["Items"])
-
+        if len(response["Items"]) > 0:
+            print(response["Items"])
+        else:
+            print(response["Items"])
 
 
 
