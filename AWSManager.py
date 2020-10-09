@@ -58,37 +58,42 @@ class Events:
 
     def update_event(self, Event_name, New_Event_name, New_Event_date, New_Event_time, New_User,  New_Event_desc,  New_Event_image, New_Event_location ):
         response = self.table.scan(
-            FilterExpression=Attr("Event_name").eq(Event_name)
+            FilterExpression=Attr("event_name").eq(Event_name)
         )
+        print(response["Items"])
+
+
+
+
         
-        if response["Items"]:
-             self.Primary_key = response["Items"][0]["event_id"]
-             res = self.table.put_item(
-                     Item = {
-                         self.Primary_Column_Name:self.Primary_key,
-                         self.columns[0]: New_Event_name,
-                         self.columns[1] : New_Event_date,
-                         self.columns[2] : New_Event_time,
-                         self.columns[3] : New_User,
-                         self.columns[4] : New_Event_desc,
-                         self.columns[5] : New_Event_image,
-                         self.columns[6] : New_Event_location
+        # if response["Items"]:
+        #      self.Primary_key = response["Items"][0]["event_id"]
+        #      res = self.table.put_item(
+        #              Item = {
+        #                  self.Primary_Column_Name:self.Primary_key,
+        #                  self.columns[0]: New_Event_name,
+        #                  self.columns[1] : New_Event_date,
+        #                  self.columns[2] : New_Event_time,
+        #                  self.columns[3] : New_User,
+        #                  self.columns[4] : New_Event_desc,
+        #                  self.columns[5] : New_Event_image,
+        #                  self.columns[6] : New_Event_location
 
-                     }
+        #              }
                  
-             )
+        #      )
 
-             return {
-                 "Primary_key": self.Primary_key
+        #      return {
+        #          "Primary_key": self.Primary_key
 
 
-             }
-        else:
-            return {
-                "Results": False,
-                "Error": "event doesnt exists"
+        #      }
+        # else:
+        #     return {
+        #         "Results": False,
+        #         "Error": "event doesnt exists"
                 
-            }
+        #     }
 
     def delete(self, Event_name):
         response = self.table.scan(
@@ -118,38 +123,9 @@ class Events:
 
 
 
-        # if response["Items"]:
-        #      self.Primary_key = response["Items"][0]["event_id"]
-        #      res = self.table.delete_item(
-        #          Key={
-        #              self.Primary_Column_Name:self.Primary_key
-
-        #          }
-        #      )
-        #      return {
-        #          "Result": True,
-        #          "Error": None,
-        #          "description": "event was deleted"
-        #      }
-        # else:
-        #     return {
-        #         "Result": False,
-        #         "Error": "Event does not exists"
-        #     }
-    
-
-    def Last_insert_into_(self):
-        response = self.table.query(
-            KeyConditionExpression=Key('event_id').eq('event_id')
-            )
-        items = response['Items']
-        print(items)
-
-
-
 t1 = Events()
-# t1.check_if_event_exists(Event_name = "cams party", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
-
-t1.delete('maybeee this will work')
+# t1.check_if_event_exists(Event_name = "cams listening party", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
+t1.update_event(Event_name = "cams listening party", New_Event_name = "cams listening party", New_Event_date = "to delete", New_Event_time ="to delete", New_User ="to delete", New_Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", New_Event_image ="to delete", New_Event_location = "to delete")
+# t1.delete('maybeee this will work')
 
 
