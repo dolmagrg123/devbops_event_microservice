@@ -63,7 +63,6 @@ class Events:
         if len(response["Items"]) > 0:
             primary_key = response["Items"][0]['event_name']
            
-           
             res = self.table.put_item(
                 Item = {
                     self.Primary_Column_Name: primary_key,
@@ -76,41 +75,20 @@ class Events:
 
                 }
             )
+            return{
+                "Primary Key": primary_key,
+                "Error": None,
+                "description": "Event was updated"
+            }
 
         else:
+
             print(response["Items"])
+            return{
+                "Results": False,
+                "Error": "Event does not exist in our database"
+            }
 
-
-
-        
-        # if response["Items"]:
-        #      self.Primary_key = response["Items"][0]["event_id"]
-        #      res = self.table.put_item(
-        #              Item = {
-        #                  self.Primary_Column_Name:self.Primary_key,
-        #                  self.columns[0]: New_Event_name,
-        #                  self.columns[1] : New_Event_date,
-        #                  self.columns[2] : New_Event_time,
-        #                  self.columns[3] : New_User,
-        #                  self.columns[4] : New_Event_desc,
-        #                  self.columns[5] : New_Event_image,
-        #                  self.columns[6] : New_Event_location
-
-        #              }
-                 
-        #      )
-
-        #      return {
-        #          "Primary_key": self.Primary_key
-
-
-        #      }
-        # else:
-        #     return {
-        #         "Results": False,
-        #         "Error": "event doesnt exists"
-                
-        #     }
 
     def delete(self, Event_name):
         response = self.table.scan(
