@@ -4,15 +4,6 @@ from AWSManager import Events
 event = Events()
 app = Flask(__name__)
 
-{
-    "Event_name": {eventname},
-     "Event_date": {date},
-      "Event_time": {time},
-       "User": {userid},
-        "Event_desc": {description},
-         "Event_image": {img},
-          "Event_location": {location}
-}
 
 @app.route("/create-event", methods=["POST"])
 def create():
@@ -49,6 +40,7 @@ def update():
 
     event.update()
 
+#@app.route
 #@app.route("/event/viewing", methods= ["GET"])
 # def view_event():
 #     return 
