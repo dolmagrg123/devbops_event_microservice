@@ -45,14 +45,6 @@ def view_event():
     res = event.view()
     return res
 
-# @app.route("/event/update")
-# def update_event():
-#     t1.put("Event_name", "Event_desc", "Date_time", "Price", "Address", "Virtual")
-
-
-#@app.route("/event/delete", methods=["POST"])
-#def delete_eventç():
-#      t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
 
 # @app.route("/event/rsvp", methods=["POST"])
 # def rsvp():
