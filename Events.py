@@ -40,10 +40,10 @@ def update():
 
     event.update()
 
-#@app.route
-#@app.route("/event/viewing", methods= ["GET"])
-# def view_event():
-#     return 
+@app.route("/event-view", methods= ["GET"])
+def view_event():
+    res = event.view()
+    return res
 
 # @app.route("/event/update")
 # def update_event():

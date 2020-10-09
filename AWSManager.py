@@ -114,7 +114,9 @@ class Events:
                 "Result": False,
                 "Error": "Event does not exists"
             }
-
+    def view(self):
+        res = self.table.scan()
+        return res['Items']
 
 
 
