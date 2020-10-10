@@ -31,7 +31,6 @@ def delete():
 @app.route("/event-update", methods=["POST"]) 
 def update():
     res = request.json
-    New_Event_name = res['New_Event_name']
     New_Event_date = res['New_Event_date']
     New_Event_time = res['New_Event_time']
     New_User = res['New_User']
@@ -40,7 +39,7 @@ def update():
     New_Event_location = res['New_Event_location'],
     New_Online = res['New_Online']
 
-    event.update()
+    event.update_event(Event_name = Event_name, New_Event_date = New_Event_date , New_Event_time = New_Event_time, New_User = New_User,  New_Event_desc = New_Event_desc,  New_Event_image = New_Event_image, New_Event_location = New_Event_location, New_Online = New_Online)
 
 @app.route("/event-view", methods= ["GET"])
 def view_event():
