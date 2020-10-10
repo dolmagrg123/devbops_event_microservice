@@ -43,9 +43,9 @@ class Events:
 
     def check_if_event_exists(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online):
         response = self.table.scan(
-            FilterExpression=Attr("Event_name").eq(Event_name)
+            FilterExpression=Attr("event_name").eq(Event_name)
         )
-        print(response["Items"])
+        # print(response["Items"])
         if response["Items"]:
             print("it exists")
             return {
@@ -55,7 +55,11 @@ class Events:
             
         else:
             self.put(Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online)
-            
+            return {
+                "Result": True,
+                "Error": "NONE",
+                "description": "Event was created"
+            }
 
     def update_event(self, Event_name, New_Event_date, New_Event_time, New_User,  New_Event_desc,  New_Event_image, New_Event_location, New_Online):
         response = self.table.scan(
@@ -115,18 +119,20 @@ class Events:
                 "Result": False,
                 "Error": "Event does not exists"
             }
+
     def view(self):
         res = self.table.scan()
         # print(res['Items'])
         return res['Items']
 
     def rsvp(self, User):
-        return res
+        pass
+        # return res
 
 
-t1 = Events()
+# t1 = Events()
 # t1.check_if_event_exists(Event_name = "cams listening party", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
 # t1.update_event(Event_name = "cams listening party", New_Event_date = "xz", New_Event_time ="xz", New_User ="to delete", New_Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", New_Event_image ="to delete", New_Event_location = "to delete", New_Online = "Yes")
 # t1.delete('maybeee this will work')
-t1.view()
+# t1.view()
 
