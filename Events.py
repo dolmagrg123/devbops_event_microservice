@@ -34,7 +34,7 @@ def delete():
 
 
 
-
+# works
 @app.route("/event-update", methods=["POST"]) 
 def update():
     res = request.json
@@ -57,6 +57,12 @@ def update():
 def view_event():
     res = event.view()
     return res
+
+
+
+
+
+
 
 #still a work in progress
 @app.route("/event-rsvp", methods= ["GET"])

@@ -1,20 +1,21 @@
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
-
-
-
+# ​
+# ​
+# ​
 class Events:
     def __init__(self):
         self.__Tablename__ = "devbops_events"
         self.client = boto3.client('dynamodb')
         self.DB = boto3.resource('dynamodb')
         self.Primary_Column_Name = "event_name"
-        self.Primary_key = 1
-        self.columns = ["Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location", "Online"]
+        # self.Primary_key = 1
+        self.columns = ["Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location", "Online","RSVP"]
         self.table = self.DB.Table(self.__Tablename__)
+# ​
+    def put(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online, RSVP):
 
-    def put(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online):
-
+        
         response = self.table.put_item(
             Item = {
                 self.Primary_Column_Name: Event_name,
@@ -24,10 +25,11 @@ class Events:
                 self.columns[3] : Event_desc,
                 self.columns[4] : Event_image,
                 self.columns[5] : Event_location,
-                self.columns[6] : Online
+                self.columns[6] : Online,
+                self.columns[7] : RSVP
             }
         )
-
+# ​
         if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
             return {
                 "Result": True,
@@ -40,8 +42,8 @@ class Events:
                 "Results": False,
                 "Error": "event was not created"
             }
-
-    def check_if_event_exists(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online):
+# ​
+    def check_if_event_exists(self,Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online,RSVP):
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
@@ -53,14 +55,14 @@ class Events:
                 "Error": "Event already exists"
             }
             
-        else:
-            self.put(Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online)
-            return {
-                "Result": True,
-                "Error": "NONE",
-                "description": "Event was created"
+        self.put(Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online,RSVP)
+            
+        return {
+            "Result": True,
+            "Error": "NONE",
+            "description": "Event was created"
             }
-
+# ​
     def update_event(self, Event_name, New_Event_date, New_Event_time, New_User,  New_Event_desc,  New_Event_image, New_Event_location, New_Online):
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
@@ -85,27 +87,27 @@ class Events:
                 "Error": None,
                 "description": "Event was updated"
             }
-
+# ​
         else:
-
+# ​
             print(response["Items"])
             return{
                 "Results": False,
                 "Error": "Event does not exist in our database"
             }
-
-
+# ​
+# ​
     def delete(self, Event_name):
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
-
+# ​
         if len(response["Items"]) > 0:
             print(response["Items"])
             res = self.table.delete_item(
                  Key={
                      self.Primary_Column_Name:Event_name
-
+# ​
                  }
              )
             return {
@@ -119,20 +121,54 @@ class Events:
                 "Result": False,
                 "Error": "Event does not exists"
             }
-
+# ​
     def view(self):
         res = self.table.scan()
         # print(res['Items'])
         return res['Items']
+# ​
+    def rsvp(self, User,Event_name):
+        response = self.table.scan(
+            FilterExpression=Attr("event_name").eq(Event_name)
+        )
+        if response["Items"]:
+            res = self.table.update_item(
+                Key={
+                    'event_name' :Event_name,   
+                        
+                },
+            
+               UpdateExpression="set RSVP= list_append(RSVP, :i)",
+               ExpressionAttributeValues={
+                   ':i': [User]
+               }
+# ​
+#    
+            )
+            #return res
+            if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
+                return {
+                    "Result": True,
+                    "Error": None,
+                    "Description": "RSVP was updated succesfully",
+                
+                    "BlogName": None
+                }
+            else:
+                return {
+                    "Result": False,
+                    "Error": "Database error",
+                    "Description": "Database error",
+                    "BlogName": None
+                } 
+        else:
+            return {
+                "Result": False,
+                "Error": "Event not found",
+                "Description": "Cannot add comment",
+                "BlogName": None
+            }
 
-    def rsvp(self, User):
-        pass
-        # return res
 
-
-# t1 = Events()
-# t1.check_if_event_exists(Event_name = "cams listening party", Event_date = "to delete", Event_time ="to delete", User ="to delete", Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", Event_image ="to delete", Event_location = "to delete")
-# t1.update_event(Event_name = "cams listening party", New_Event_date = "xz", New_Event_time ="xz", New_User ="to delete", New_Event_desc = "Morbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risusMorbi consequat enim sit amet lacus pretium auctor. Nam porta molestie accumsan. Etiam condimentum tempus pretium. Phasellus mauris magna, convallis eu mollis nec, ultrices sed massa. Fusce rutrum porta condimentum. Sed ultricies, velit nec egestas porta, justo lectus accumsan purus, et euismod justo eros vitae mi. Nulla ac imperdiet ex. Integer eu ante egestas, interdum nisi ut, vulputate augue. Praesent vulputate libero sed libero accumsan tempus. Aenean rutrum felis tellus, pharetra luctus massa gravida sit amet. Phasellus sodales tempus magna, a porttitor enim ornare vel. Maecenas faucibus dictum elit, id lacinia nunc. Quisque lacus ligula, pulvinar id nunc ac, ornare semper neque. Praesent nec ipsum risus", New_Event_image ="to delete", New_Event_location = "to delete", New_Online = "Yes")
-# t1.delete('maybeee this will work')
-# t1.view()
-
+test = Events()
+test.rsvp("Anish", "Hi")
