@@ -18,8 +18,9 @@ def create():
     Event_image = res['Event_image']
     Event_location = res['Event_location']
     Online = res['Online']
+    
 
-    created = event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location, Online = Online)
+    created = event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location, Online = Online, RSVP=[])
     return created
 
 
@@ -64,14 +65,19 @@ def view_event():
 
 
 
-#still a work in progress
 @app.route("/event-rsvp", methods= ["GET"])
 def rsvp():
-    res = event.rsvp()
-    return res
-# @app.route("/event/rsvp", methods=["POST"])
-# def rsvp():
-#      t1.put("Event_name", "Event_date", "Event_time", "User", "Event_desc", "Event_image", "Event_location")
+
+    
+    res = request.json
+    Event_name = res['Event_name']
+    User = res["USER"]
+    
+    rsvp = event.rsvp(User=User,Event_name=Event_name)
+    return rsvp
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
