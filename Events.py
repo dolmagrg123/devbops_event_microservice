@@ -33,6 +33,7 @@ def delete():
 @app.route("/event-update", methods=["POST"]) 
 def update():
     res = request.json
+    Event_name = res["Event_name"]
     New_Event_date = res['New_Event_date']
     New_Event_time = res['New_Event_time']
     New_User = res['New_User']
