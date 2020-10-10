@@ -18,16 +18,18 @@ def create():
     Event_location = res['Event_location']
     Online = res['Online']
 
-    event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location, Online = Online)
-    
+    create = event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location, Online = Online)
+    return create
+
 @app.route("/event-delete", methods=["POST"])
 def delete():
     res = request.json
     Event_name = res['Event_name']
     
-    event.delete(Event_name = Event_name)
+    deleted = event.delete(Event_name = Event_name)
+    return deleted
 
-#not done yet
+
 @app.route("/event-update", methods=["POST"]) 
 def update():
     res = request.json
