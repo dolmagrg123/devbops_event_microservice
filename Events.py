@@ -16,8 +16,9 @@ def create():
     Event_desc = res['Event_desc']
     Event_image = res['Event_image']
     Event_location = res['Event_location']
+    Online = res['Online']
 
-    event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location)
+    event.check_if_event_exists(Event_name = Event_name, Event_date = Event_date, Event_time = Event_time, User = User, Event_desc= Event_desc, Event_image = Event_image, Event_location = Event_location, Online = Online)
     
 @app.route("/event-delete", methods=["POST"])
 def delete():
@@ -36,7 +37,8 @@ def update():
     New_User = res['New_User']
     New_Event_desc = res['New_Event_desc']
     New_Event_image = res['New_Event_image']
-    New_Event_location = res['New_Event_location']
+    New_Event_location = res['New_Event_location'],
+    New_Online = res['New_Online']
 
     event.update()
 
