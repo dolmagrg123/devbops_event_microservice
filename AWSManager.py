@@ -170,5 +170,5 @@ class Events:
             }
 
 
-test = Events()
-test.rsvp("Anish", "Hi")
+# test = Events()
+# test.rsvp("Anish", "Hi")
