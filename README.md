@@ -1,7 +1,8 @@
 #Primary Key = event_name
 
 # Create Event - Request method type: POST
-FOR / create-event, {
+FOR / create-event, 
+{
     "Event_name": {Event_name},
     "Event_date": {Event_date},
     "Event_time": {Event_time},
@@ -12,7 +13,7 @@ FOR / create-event, {
     "Online": {Online}
 }
 
-##Response will be
+## Response will be
 {
     "Result": True,
     "Error": None,
