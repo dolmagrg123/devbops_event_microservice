@@ -61,10 +61,6 @@ def view_event():
 
 
 
-
-
-
-
 @app.route("/event-rsvp", methods= ["GET"])
 def rsvp():
 
