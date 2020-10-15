@@ -1,6 +1,6 @@
-Primary Key = event_name
+#Primary Key = event_name
 
-Create_event - Request method type: POST
+# Create Event - Request method type: POST
 FOR / create-event, {
     "Event_name": {Event_name},
     "Event_date": {Event_date},
@@ -12,8 +12,7 @@ FOR / create-event, {
     "Online": {Online}
 }
 
-Response will be
-
+##Response will be
 {
     "Result": True,
     "Error": None,
@@ -27,20 +26,20 @@ else
     "Error": "event was not created"
 }
 
-Delete Event - Request method type: POST
-FOR /delete
+# Delete Event - Request method type: POST
+FOR /delete,
 {
     "Event_name": {Event_name}
 }
 
-Response will be
+## Response will be
 {
     "Result": True,
     "Error": None,
     "description": "event was deleted"
 }
 
-Update Event- Request method type: POST
+# Update Event- Request method type: POST
 FOR /update,
 {
     "Event_name": {Event_name},
@@ -53,27 +52,27 @@ FOR /update,
     "New_Online": {New_Event_desc}
 }
 
-Response will be
+## Response will be
 {
     "Primary Key": primary_key,
     "Error": None,
     "description": "Event was updated"
 }
 
-View Event - Request method type: GET
-FOR /view
+# View Event - Request method type: GET
+FOR /view,
 {
     res = event.view()
     return res
 }
 
-RSVP Event - Request method type: GET
+# RSVP Event - Request method type: GET
 FOR /rsvp
 {
     'event_name':Event_name,
 }
 
-Response will be
+## Response will be
 {
     "Result": True,
     "Error": None,
