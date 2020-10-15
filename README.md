@@ -1,4 +1,4 @@
-#Primary Key = event_name
+# Primary Key = event_name
 
 # Create Event - Request method type: POST
 FOR / create-event, 
