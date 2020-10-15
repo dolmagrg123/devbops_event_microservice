@@ -1,5 +1,5 @@
 from flask import Flask, request
-from AWSManager import Events
+from devbops_event_microservice.AWSManager import Events
  
 event = Events()
 app = Flask(__name__)
