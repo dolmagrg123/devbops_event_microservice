@@ -41,7 +41,7 @@ class Events:
                 "EventName": Event_name
             }
         else:
-            return {
+            return  {
                 "Result": False,
                 "Error": "Event was not created",
                 "Description": "Database error",
