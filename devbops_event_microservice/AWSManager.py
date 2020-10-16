@@ -125,7 +125,14 @@ class Events:
     def view(self):
         res = self.table.scan()
         # print(res['Items'])
-        return res['Items']
+        return {
+            "Result": True,
+            "Error": None,
+            "Description": "All events from database",
+            "BlogDB": res['Items']
+        }
+
+        #return res['Items']
 # ​
     def rsvp(self, User,Event_name):
         response = self.table.scan(
@@ -172,3 +179,6 @@ class Events:
 
 # test = Events()
 # test.rsvp("Anish", "Hi")
+if __name__ == "__main__":
+    test = Events()
+    print(test.view())
