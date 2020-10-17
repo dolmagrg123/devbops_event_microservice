@@ -155,14 +155,17 @@ class Events:
             FilterExpression=Attr("event_name").eq(Event_name)
         )
 
-        if User in response['Items'][0]['RSVP']:
-            return {
-                "Result": False,
-                "Error": "Database error",
-                "Description": "Cannot RSVP more than once"
-            }
+
 
         if response["Items"]:
+
+            if User in response['Items'][0]['RSVP']:
+                return {
+                    "Result": False,
+                    "Error": "Database error",
+                    "Description": "Cannot RSVP more than once"
+                }
+
             res = self.table.update_item(
                 Key={
                     'event_name': Event_name,
@@ -177,7 +180,7 @@ class Events:
                 #
             )
             # return res
-            if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
+            if res["ResponseMetadata"]["HTTPStatusCode"] == 200:
                 return {
                     "Result": True,
                     "Error": None,
