@@ -9,8 +9,8 @@
 ### Action: 
  * `C` for create event
  * `R` for retrieve all events
- * `U` for update a event
- * `D` for delete a event
+ * `U` for update an event
+ * `D` for delete an event
  * `Q` for rsvp an event
 
 ### Request methods and templates 
@@ -128,7 +128,7 @@ Request body:
   "Location": null,
   "Date": null,
   "Time": null,
-  "RSVP": "RSVP for the event"
+  "RSVP": "RSVP to the event"
 }
 
 Response body:
