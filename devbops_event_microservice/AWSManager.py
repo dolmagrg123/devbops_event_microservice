@@ -150,6 +150,7 @@ class Events:
 
     # ​
     def rsvp(self, User, Event_name):
+        print(User)
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
@@ -160,9 +161,9 @@ class Events:
 
                 },
 
-                UpdateExpression="set RSVP= list_append(RSVP, :i)",
+                UpdateExpression="set RSVP= list_append(RSVP, :s)",
                 ExpressionAttributeValues={
-                    ':i': [User]
+                    ':s': [User]
                 }
                 # ​
                 #
