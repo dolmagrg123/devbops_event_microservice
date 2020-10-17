@@ -150,10 +150,18 @@ class Events:
 
     # ​
     def rsvp(self, User, Event_name):
-        print(User)
+        #print(User)
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
+
+        if User in response['Items'][0]['RSVP']:
+            return {
+                "Result": False,
+                "Error": "Database error",
+                "Description": "Cannot RSVP more than once"
+            }
+
         if response["Items"]:
             res = self.table.update_item(
                 Key={
@@ -283,4 +291,5 @@ if __name__ == "__main__":
     #test.getUserRvsp("hrgutou1")
     #print(test.getUserRvsp("hrgutou"))
     #print(test.cancelRsvp("hrgutou", "event 2"))
-    print(test.cancelRsvp("user21","event 2"))
+    #print(test.cancelRsvp("user21","event 2"))
+    print(test.rsvp("hrgutou1", 'event 2'))
