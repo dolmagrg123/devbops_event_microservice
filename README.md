@@ -11,7 +11,7 @@
  * `R` for retrieve all events
  * `U` for update a event
  * `D` for delete a event
- * `Q` for rsvp a event
+ * `Q` for rsvp an event
 
 ### Request methods and templates 
  - Request Body
@@ -40,7 +40,7 @@
 ```
 
 ### Route
-POST to `https://0c77865x10.execute-api.us-east-1.amazonaws.com/v1/blog`
+POST to `https://0c77865x10.execute-api.us-east-1.amazonaws.com/v1/event`
 
 
 ### Examples
