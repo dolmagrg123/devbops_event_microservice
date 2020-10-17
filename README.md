@@ -24,7 +24,7 @@
     "Location": str / null if action = R, D, Q ,
     "Date": str / null if action = R, D, Q ,
     "Time": str / null if action = R, D, Q,
-    "RSVP": str / null if action = C, R, U, D
+    "RSVP": str / null if action = C, R, U, D 
 }
 ```
  - Response Body
