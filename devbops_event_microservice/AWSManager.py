@@ -68,38 +68,43 @@ class Events:
         return res
 
     # ​
-    def update_event(self, Event_name, New_Event_date, New_Event_time, New_User, New_Event_desc, New_Event_image,
+    def update_event(self, Event_name, New_Event_date, New_Event_time,  New_Event_desc, New_Event_image,
                      New_Event_location, New_Online):
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
         if len(response["Items"]) > 0:
-            primary_key = response["Items"][0]['event_name']
-
-            res = self.table.put_item(
-                Item={
-                    self.Primary_Column_Name: primary_key,
-                    self.columns[0]: New_Event_date,
-                    self.columns[1]: New_Event_time,
-                    self.columns[2]: New_User,
-                    self.columns[3]: New_Event_desc,
-                    self.columns[4]: New_Event_image,
-                    self.columns[5]: New_Event_location,
-                    self.columns[6]: New_Online
+            self.table.update_item(
+                Key={
+                    'event_name': Event_name
+                },
+                UpdateExpression="set Event_date=:d, Event_desc=:c, Event_location=:l, Event_image=:i ,Event_time=:t, #ol=:z",
+                ExpressionAttributeValues={
+                    ':d': New_Event_date,
+                    ':c': New_Event_desc,
+                    ':l': New_Event_location,
+                    ':t': New_Event_time,
+                    ':z': New_Online,
+                    ':i': New_Event_image
+                },
+                ExpressionAttributeNames={
+                    "#ol": "Online"
                 }
             )
+
             return {
-                "Primary Key": primary_key,
+                "Result": True,
                 "Error": None,
-                "description": "Event was updated"
+                "Description": "Event was updated"
             }
         # ​
         else:
             # ​
-            print(response["Items"])
+
             return {
-                "Results": False,
-                "Error": "Event does not exist in our database"
+                "Result": False,
+                "Error": "DB error",
+                "Description": "Event does not exist in our database"
             }
 
     # ​
@@ -120,13 +125,14 @@ class Events:
             return {
                 "Result": True,
                 "Error": None,
-                "description": "event was deleted"
+                "Description": "event was deleted"
             }
         else:
-            print("item does not exists")
+            #print("item does not exists")
             return {
                 "Result": False,
-                "Error": "Event does not exists"
+                "Error": "Deletion error",
+                "Description": "Event not exists"
             }
 
     # ​
@@ -144,45 +150,136 @@ class Events:
 
     # ​
     def rsvp(self, User, Event_name):
+        #print(User)
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
+
+
+
         if response["Items"]:
+
+            if User in response['Items'][0]['RSVP']:
+                return {
+                    "Result": False,
+                    "Error": "Database error",
+                    "Description": "Cannot RSVP more than once"
+                }
+
             res = self.table.update_item(
                 Key={
                     'event_name': Event_name,
 
                 },
 
-                UpdateExpression="set RSVP= list_append(RSVP, :i)",
+                UpdateExpression="set RSVP= list_append(RSVP, :s)",
                 ExpressionAttributeValues={
-                    ':i': [User]
+                    ':s': [User]
                 }
                 # ​
                 #
             )
             # return res
-            if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
+            if res["ResponseMetadata"]["HTTPStatusCode"] == 200:
                 return {
                     "Result": True,
                     "Error": None,
-                    "Description": "RSVP was updated succesfully",
-
-                    "BlogName": None
+                    "Description": "RSVP was updated successfully"
                 }
             else:
                 return {
                     "Result": False,
                     "Error": "Database error",
-                    "Description": "Database error",
-                    "BlogName": None
+                    "Description": "Database error"
                 }
         else:
             return {
                 "Result": False,
                 "Error": "Event not found",
-                "Description": "Cannot add comment",
-                "BlogName": None
+                "Description": "Cannot add rsvp"
+            }
+
+    def getAllUserEvent(self, username):
+        response = self.table.scan()['Items']
+        lst = []
+        if len(response) > 0:
+            for d in response:
+                if d['User'] == username:
+                    lst.append(d)
+            return {
+                "Result": True,
+                "Error": None,
+                "Description": "All events this user created",
+                "EventsDB": lst
+            }
+        else:
+            return {
+                "Result": False,
+                "Error": "No blogs for this user",
+                "Description": "This user haven't post any event yet.",
+                "EventsDB": lst
+            }
+
+    def getUserRvsp(self, username):
+        # get current user's rvsp
+        lst = []
+        response = self.table.scan()['Items']
+        for i in response:
+            if username in i['RSVP']:
+                lst.append(i)
+
+        return {
+            "Result": True,
+            "Error": None,
+            "Description": "All RSVP for this user",
+            "RSVP": lst
+        }
+        #return response
+    def cancelRsvp(self, username, eventname):
+        response = self.table.scan(
+            FilterExpression=Attr("event_name").eq(eventname)
+        )
+        try:
+            idx = response['Items'][0]['RSVP'].index(username)
+        except:
+            return {
+                "Result": False,
+                "Error": "User not found",
+                "Description": "User haven't make RSVP to this event yet"
+            }
+
+        if response["Items"]:
+            statement = "REMOVE RSVP["+ str(idx)+ "]"
+
+            res = self.table.update_item(
+                Key={
+                    'event_name': eventname,
+
+                },
+
+                UpdateExpression=statement,
+
+                # ​
+                #
+            )
+            # return res
+            if res["ResponseMetadata"]["HTTPStatusCode"] == 200:
+                return {
+                    "Result": True,
+                    "Error": None,
+                    "Description": "RSVP was cancelled successfully"
+                }
+            else:
+                return {
+                    "Result": False,
+                    "Error": "Database error",
+                    "Description": "Database error"
+                }
+        else:
+            return {
+                "Result": False,
+                "Error": "Event not found",
+                "Description": "Cannot cancel rsvp because event not found"
             }
 
 
@@ -190,4 +287,12 @@ class Events:
 # test.rsvp("Anish", "Hi")
 if __name__ == "__main__":
     test = Events()
-    print(test.view())
+    #print(test.rsvp("hrgutou1", "easdfvent 2"))
+    #print(test.getAllUserEvent("user12"))
+    #print(test.update_event(Event_name='event 2', New_Event_date='Friday Oct 16th 2020', New_Event_time='12:17 am',  New_Event_desc='updated', New_Event_image="",
+    #                New_Event_location="NY", New_Online="Onsite"))
+    #test.getUserRvsp("hrgutou1")
+    #print(test.getUserRvsp("hrgutou"))
+    #print(test.cancelRsvp("hrgutou", "event 2"))
+    #print(test.cancelRsvp("user21","event 2"))
+    print(test.rsvp("hrgutou1", 'event 2'))
