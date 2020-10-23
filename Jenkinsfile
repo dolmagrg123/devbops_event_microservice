@@ -14,7 +14,7 @@ pipeline {
         stage('test') {
             steps {
                 withEnv(["HOME=${env.WORKSPACE}"]) {
-                    sh 'pytest test_Events.py'
+                    sh 'python3 test.py'
                 }
             }
     
