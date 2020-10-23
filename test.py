@@ -52,32 +52,32 @@ class BasicTestCase(unittest.TestCase):
         data = json.loads(rv.data)
         assert data['Result'] == False
 
-    def test_4_update(self):
-        req = {
-            "Event_name": "QATesting",
-            "Event_date": date.today().strftime("%B %d, %Y"),
-            "Event_time": datetime.now(),
-            "User": "QATest",
-            "Event_desc": "Test Number 2",
-            "Event_image": "None",
-            "Event_location": "Anywhere, USA",
-            "Online": "Yes"
-        }
-        rv = self.app.post('/event-update', json=req)
-        data = json.loads(rv.data)
-        assert data['Result'] == True
+    # def test_4_update(self):
+    #     req = {
+    #         "Event_name": "QATesting",
+    #         "Event_date": date.today().strftime("%B %d, %Y"),
+    #         "Event_time": datetime.now(),
+    #         "User": "QATest",
+    #         "Event_desc": "Test Number 2",
+    #         "Event_image": "None",
+    #         "Event_location": "Anywhere, USA",
+    #         "Online": "Yes"
+    #     }
+    #     rv = self.app.post('/event-update', json=req)
+    #     data = json.loads(rv.data)
+    #     assert data['Result'] == True
 
-    def test_5_NONEXIST_udpate(self):
-        req = {
-            "BlogName": "_QATesting",
-            "New_BlogDate": date.today().strftime("%B %d, %Y"),
-            "New_BlogTime": datetime.now(),
-            "New_BlogContent": "blogBody",
-            "New_BlogLocation": "location"
-        }
-        rv = self.app.post('/event-update', json=req)
-        data = json.loads(rv.data)
-        assert data['Result'] == False
+    # def test_5_NONEXIST_udpate(self):
+    #     req = {
+    #         "BlogName": "_QATesting",
+    #         "New_BlogDate": date.today().strftime("%B %d, %Y"),
+    #         "New_BlogTime": datetime.now(),
+    #         "New_BlogContent": "blogBody",
+    #         "New_BlogLocation": "location"
+    #     }
+    #     rv = self.app.post('/event-update', json=req)
+    #     data = json.loads(rv.data)
+    #     assert data['Result'] == False
 
     # def test_6_rsvp(self):
     #     req = {
