@@ -91,7 +91,8 @@ class Events:
             return {
                 "Primary Key": primary_key,
                 "Error": None,
-                "description": "Event was updated"
+                "description": "Event was updated",
+                "Results": True
             }
         # ​
         else:
