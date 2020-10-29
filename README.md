@@ -1,82 +1,167 @@
-Primary Key = event_name
+# Devblops_event_microservice
 
-Create_event - Request method type: POST
-FOR / create-event, {
-    "Event_name": {Event_name},
-    "Event_date": {Event_date},
-    "Event_time": {Event_time},
-    "User": {User}
-    "Event_desc": {Event_desc}
-    "Event_image": {Event_image}
-    "Event_location": {Event_location}
-    "Online": {Online}
-}
+## Issue Tracker
+ - Token should be in header (API Gateway)
+ - Comments should have date/time (Backend)
 
-Response will be
+## Event Frontend
 
+### Action: 
+ * `C` for create event
+ * `R` for retrieve all events
+ * `U` for update an event
+ * `D` for delete an event
+ * `Q` for rsvp an event
+
+### Request methods and templates 
+ - Request Body
+```
 {
-    "Result": True,
-    "Error": None,
-    "description": "Event was created succesfully",
-    "Primary_key":  Event_name
+    "Token": str <REQUIRED>,
+    "Action": str <REQUIRED>,
+    "EventSubject": str / null if action = R ,
+    "EventBody": str / null if action = R, D, Q ,
+    "Location": str / null if action = R, D, Q ,
+    "Date": str / null if action = R, D, Q ,
+    "Time": str / null if action = R, D, Q,
+    "RSVP": str / null if action = C, R, U, D
+}
+```
+ - Response Body
+ ```
+{
+    "statusCode": 200,
+    "Status": boolean,
+    "EventSubject": str / null,
+    "Error": str / null,
+    "Description": str,
+    "EventDB": Array of dicts / null
+}
+```
+
+### Route
+POST to `https://0c77865x10.execute-api.us-east-1.amazonaws.com/v1/event`
+
+
+### Examples
+ - Create event
+ ```
+Request body:
+{
+  "Token": <Token>,
+  "Action": "C",
+  "EventSubject": "First event",
+  "EventBody": "Hello world",
+  "Location": <Location>,
+  "Date": <Date>,
+  "Time": <Time>,
+  "RSVP": null
 }
 
-else
+Response body:
 {
-    "Results": False,
-    "Error": "event was not created"
+  "statusCode": 200,
+  "Status": <boolean>,
+  "EventSubject": <Title of the event you just created>,
+  "Error": str / null,
+  "Description": str
 }
 
-Delete Event - Request method type: POST
-FOR /delete
+```
+
+ - Update event:
+```
+Request body:
 {
-    "Event_name": {Event_name}
+  "Token": <Token>,
+  "Action": "U",
+  "EventSubject": "First Event",
+  "EventBody": <Content to be updated>,
+  "Location": <New location>,
+  "Date": <New Date>,
+  "Time": <New Time>,
+  "RSVP": null
 }
 
-Response will be
+Response body:
 {
-    "Result": True,
-    "Error": None,
-    "description": "event was deleted"
+  "statusCode": 200,
+  "Status": <boolean>,
+  "EventSubject": null,
+  "Error": str / null,
+  "Description": str,
+  "EventsDB": null
+}
+```
+ - Delete blog:
+```
+Request body:
+{
+  "Token": <Token>,
+  "Action": "D",
+  "EventSubject": "First Event",
+  "EventBody": null,
+  "Location": null,
+  "Date": null,
+  "Time": null,
+  "RSVP": null
 }
 
-Update Event- Request method type: POST
-FOR /update,
+Response body:
 {
-    "Event_name": {Event_name},
-    "New_Event_date": {New_Event_date},
-    "New_Event_time": {New_Event_time},
-    "New_User": {New_User},
-    "New_Event_desc": {New_Event_desc},
-    "New_Event_image": {New_Event_image},
-    "New_Event_location": {New_Event_location},
-    "New_Online": {New_Event_desc}
+  "statusCode": 200,
+  "Status": <boolean>,
+  "BlogSubject": null,
+  "Error": str / null,
+  "Description": str,
+  "EventsDB": null
+}
+```
+ - RSVP to an event:
+```
+Request body:
+{
+  "Token": <Token>,
+  "Action": "Q",
+  "EventSubject": "First Event",
+  "EventBody": null,
+  "Location": null,
+  "Date": null,
+  "Time": null,
+  "RSVP": "RSVP to the event"
 }
 
-Response will be
+Response body:
 {
-    "Primary Key": primary_key,
-    "Error": None,
-    "description": "Event was updated"
+  "statusCode": 200,
+  "Status": <boolean>,
+  "EventSubject": null,
+  "Error": str / null,
+  "Description": str,
+  "EventsDB": null
+}
+```
+ - Get all Events:
+```
+Request body:
+{
+  "Token": <Token>,
+  "Action": "R",
+  "EventSubject": null,
+  "EventBody": null,
+  "Location": null,
+  "Date": null,
+  "Time": null,
+  "RSVP": null
 }
 
-View Event - Request method type: GET
-FOR /view
+Response body:
 {
-    res = event.view()
-    return res
+  "statusCode": 200,
+  "Status": <boolean>,
+  "EventSubject": null,
+  "Error": str / null,
+  "Description": "All Events from database",
+  "EventDB": [dicts]
 }
-
-RSVP Event - Request method type: GET
-FOR /rsvp
-{
-    'event_name':Event_name,
-}
-
-Response will be
-{
-    "Result": True,
-    "Error": None,
-    "Description": "RSVP was updated succesfully",
-    "BlogName": None
-}
+```
