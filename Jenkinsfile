@@ -23,7 +23,7 @@ pipeline {
          }
          stage('speak'){
              steps{
-                 slackSend channel: '﻿jenkinsnotify', color: 'red', message: 'The test has failed. Please modify either the Test.py or your code.'
+                 slackSend channel: '﻿jenkinsnotify', color: 'red', message: 'The event services test has passed! '
 
              }
 
