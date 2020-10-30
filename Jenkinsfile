@@ -23,7 +23,7 @@ pipeline {
          }
          stage('speak'){
              steps{
-                 slackSend channel: '﻿jenkinsnotify', color: 'red', message: 'The event services test has passed! '
+                 slackSend channel: '﻿jenkinsnotify', color: '#BADA55', message: 'The event services test has passed! '
 
              }
 
