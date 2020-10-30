@@ -21,9 +21,9 @@ pipeline {
                  }
              }
          }
-         stage('deploy'){
+         stage('speak'){
              steps{
-                 echo 'Deploying...'
+                 slackSend channel: '﻿jenkinsnotify', color: 'red', message: 'The test has failed. Please modify either the Test.py or your code.'
 
              }
 
