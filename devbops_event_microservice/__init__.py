@@ -95,5 +95,10 @@ def cancelReservation():
     res = event.cancelRsvp(username, eventname)
     return res
 
+
+@app.route('/', methods=['GET'])
+def TEST():
+    return "DOCKER WORKING FINE"
+
 if __name__ == '__main__':
     app.run(debug=True)

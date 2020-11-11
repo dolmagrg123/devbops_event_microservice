@@ -1,10 +1,6 @@
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 
-
-# ​
-# ​
-# ​
 class Events:
     def __init__(self):
         self.__Tablename__ = "devbops_events"
@@ -16,7 +12,6 @@ class Events:
                         "RSVP"]
         self.table = self.DB.Table(self.__Tablename__)
 
-    # ​
     def put(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location, Online, RSVP):
 
         response = self.table.put_item(
@@ -32,7 +27,7 @@ class Events:
                 self.columns[7]: RSVP
             }
         )
-        # ​
+
         if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
             return {
                 "Result": True,
@@ -48,7 +43,6 @@ class Events:
                 "EventName": None
             }
 
-    # ​
     def check_if_event_exists(self, Event_name, Event_date, Event_time, User, Event_desc, Event_image, Event_location,
                               Online, RSVP):
         response = self.table.scan(
@@ -67,7 +61,6 @@ class Events:
 
         return res
 
-    # ​
     def update_event(self, Event_name, New_Event_date, New_Event_time,  New_Event_desc, New_Event_image,
                      New_Event_location, New_Online):
         response = self.table.scan(
@@ -97,9 +90,7 @@ class Events:
                 "Error": None,
                 "Description": "Event was updated"
             }
-        # ​
         else:
-            # ​
 
             return {
                 "Result": False,
@@ -107,19 +98,16 @@ class Events:
                 "Description": "Event does not exist in our database"
             }
 
-    # ​
-    # ​
+
     def delete(self, Event_name):
         response = self.table.scan(
             FilterExpression=Attr("event_name").eq(Event_name)
         )
-        # ​
         if len(response["Items"]) > 0:
             print(response["Items"])
             res = self.table.delete_item(
                 Key={
                     self.Primary_Column_Name: Event_name
-                    # ​
                 }
             )
             return {
@@ -135,7 +123,6 @@ class Events:
                 "Description": "Event not exists"
             }
 
-    # ​
     def view(self):
         res = self.table.scan()
         # print(res['Items'])
@@ -148,7 +135,6 @@ class Events:
 
         # return res['Items']
 
-    # ​
     def rsvp(self, User, Event_name):
         #print(User)
         response = self.table.scan(
@@ -176,7 +162,6 @@ class Events:
                 ExpressionAttributeValues={
                     ':s': [User]
                 }
-                # ​
                 #
             )
             # return res
@@ -259,8 +244,6 @@ class Events:
 
                 UpdateExpression=statement,
 
-                # ​
-                #
             )
             # return res
             if res["ResponseMetadata"]["HTTPStatusCode"] == 200:
