@@ -1,5 +1,6 @@
 pipeline {
-     agent { docker { image 'python:3.7.2' } }
+     // agent { docker { image 'python:3.7.2' } }
+     agent any
      environment {
         AWS_DEFAULT_REGION = 'us-east-1'
      }
