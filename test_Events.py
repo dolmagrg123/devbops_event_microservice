@@ -17,8 +17,7 @@ class BasicTestCase(unittest.TestCase):
     def test_1_viewing(self):
         rv = self.app.get('/event-view')
         data = json.loads(rv.data)
-        print(data['Status'], data['Error'])
-        assert data['Status'] == True
+        assert data['Result'] == True
 
     def test_2_creating(self):
         req = {
@@ -34,8 +33,7 @@ class BasicTestCase(unittest.TestCase):
 
         rv = self.app.post('/create-event', json=req)
         data = json.loads(rv.data)
-        print(data['Status'], data['Error'])
-        assert data['Status'] == True
+        assert data['Result'] == True
 
     def test_3_update(self):
         req = {
@@ -51,8 +49,7 @@ class BasicTestCase(unittest.TestCase):
 
         rv = self.app.post('/event-delete', json=req)
         data = json.loads(rv.data)
-        print(data['Status'], data['Error'])
-        assert data['Status'] == True
+        assert data['Result'] == True
 
     def test_4_delete(self):
         req = {
@@ -61,8 +58,7 @@ class BasicTestCase(unittest.TestCase):
 
         rv = self.app.post('/event-delete', json=req)
         data = json.loads(rv.data)
-        print(data['Status'], data['Error'])
-        assert data['Status'] == True
+        assert data['Result'] == True
 
 if __name__ == '__main__':
     unittest.main()
