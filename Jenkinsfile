@@ -5,7 +5,6 @@ pipeline {
             steps {
                    withEnv(["HOME=${env.WORKSPACE}"]) {
                         sh 'pip install flask'
-                        sh 'pip3 install pytest --user'
                     }
                 }
         }
