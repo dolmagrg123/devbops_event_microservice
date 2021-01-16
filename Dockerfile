@@ -34,7 +34,7 @@ RUN a2ensite flaskapp.conf
 RUN ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
     ln -sf /proc/self/fd/1 /var/log/apache2/error.log
 
-EXPOSE 100
+EXPOSE 80
 WORKDIR /var/www/devbops_event_microservice
 
 CMD  /usr/sbin/apache2ctl -D FOREGROUND
