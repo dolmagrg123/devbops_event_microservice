@@ -1,39 +1,34 @@
-node{
-    
-    stage('GitHub Checkout'){
-        git branch: 'master', credentialsId: 'git-creds', url: 'https://github.com/dolmagrg123/devbops_event_microservice'
+node {
+    stage("Github Checkout"){
+        git credentialsId: 'git', url: 'https://github.com/dolmagrg123/devbops_event_microservice'
+       
     }
-    
-    stage('DevBops Event Test'){
-        sh 'python3 test_Events.py'
-    }
-    
-    stage('Docker Image Build'){
-        sh 'docker build -t dolmagrg123/devbops_event .'
-    
-    }
-
-    stage('Docker Image Push'){
-
-        withCredentials([string(credentialsId: 'docker-pwd', variable: 'dockerHubPwd')]) {
-            sh "docker login -u dolmagrg123 -p ${dockerHubPwd}"
-    
-            }
+    stage("Testing python"){
         
-        sh 'docker push dolmagrg123/devbops_event'
-    
+      
     }
-
-    stage('Run Docker Container on Private EC2'){
+    stage("Docker Build Image"){
+        sh 'docker build -t dolmagrg123/event .'
+    }
+    stage("Push Docker Image"){
+        withCredentials([string(credentialsId: 'DockerHub', variable: 'DockerHub')]) {
+            sh "docker login -u dolmagrg123 -p${DockerHub}"
+    }
+        sh 'docker push dolmagrg123/event'
+    }
+    stage ("Run container in EC2"){
         def dockerRm = 'docker rm -f app_event'
-        def dockerRmI = 'docker rmi dolmagrg123/devbops_event'
-        def dockerRun = 'docker run -p 8092:80 -d --name app_event dolmagrg123/devbops_event'
-        sshagent(['docker-server']) {
-            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.85 ${dockerRm}"
-            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.85 ${dockerRmI}"
-            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.85 ${dockerRun}"
-           
+        def dockerRmI = 'docker rmi dolmagrg123/event'
+        def dockerRun = 'docker run -p 8092:80 -d --name app_event dolmagrg123/event'
+        sshagent(['dev-server']) {
+            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.76 ${dockerRm}"
+            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.76 ${dockerRmI}"
+            sh "ssh -o StrictHostKeyChecking=no ec2-user@172.25.11.76 ${dockerRun}"
+  
         }
-    
-    }   
+       
+        
+       
+    }
 }
+    
