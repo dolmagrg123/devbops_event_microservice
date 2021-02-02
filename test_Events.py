@@ -1,9 +1,10 @@
 import unittest
 import json
+import boto3
 from devbops_event_microservice import app
 from datetime import date, datetime
 
-
+boto3.client( region_name='us-east-1')
 class BasicTestCase(unittest.TestCase):
 
     def setUp(self):
