@@ -4,7 +4,7 @@ node {
        
     }
     stage("Testing python"){
-        
+       sh 'python3 test_Events.py' 
       
     }
     stage("Docker Build Image"){
