@@ -1,10 +1,12 @@
 import unittest
 import json
+import boto3
 
 from devbops_event_microservice import app
 from datetime import date, datetime
 
 class BasicTestCase(unittest.TestCase):
+    self.client = boto3.client('aws_service_name',region_name='eu-west-1')
 
     def setUp(self):
         unittest.TestLoader.sortTestMethodsUsing = None
