@@ -5,7 +5,6 @@ class Events:
     def __init__(self):
         self.__Tablename__ = "devbops_events"
         self.client = boto3.client('dynamodb')
-        self.client = boto3.client('aws_service_name',region_name='us-east-1')
         self.DB = boto3.resource('dynamodb')
         self.Primary_Column_Name = "event_name"
         # self.Primary_key = 1
