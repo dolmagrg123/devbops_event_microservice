@@ -6,7 +6,7 @@ from devbops_event_microservice import app
 from datetime import date, datetime
 
 class BasicTestCase(unittest.TestCase):
-    self.client = boto3.client('aws_service_name',region_name='eu-west-1')
+    self.client = boto3.client('aws_service_name',region_name='us-east-1')
 
     def setUp(self):
         unittest.TestLoader.sortTestMethodsUsing = None
