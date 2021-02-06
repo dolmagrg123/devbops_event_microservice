@@ -71,23 +71,23 @@ class BasicTestCase(unittest.TestCase):
           print(data)
           assert data['Result'] == True
             
-#       def test_5_duplicate_creating(self):
-#           req = {
-#               'Event_name': "QA_TEST",
-#               'Event_date': date.today().strftime("%B %d, %Y"),
-#               'Event_time': datetime.now(),
-#               'User': "username",
-#               'Event_desc': "Event_desc",
-#               'Event_image': "Event_image",
-#               'Event_location': "Event_location",
-#               'Online': "Online"
-#         }
+      def test_5_duplicate_creating(self):
+          req = {
+              'Event_name': "QA_TEST",
+              'Event_date': date.today().strftime("%B %d, %Y"),
+              'Event_time': datetime.now(),
+              'User': "username",
+              'Event_desc': "Event_desc",
+              'Event_image': "Event_image",
+              'Event_location': "Event_location",
+              'Online': "Online"
+        }
 
-#           rv = self.app.post('/create-event', json=req)
-#           data = json.loads(rv.data)
-#           #print(data['Status'], data['Error'])
-#           print(data)
-#           assert data['Result'] == False
+          rv = self.app.post('/create-event', json=req)
+          data = json.loads(rv.data)
+          #print(data['Status'], data['Error'])
+          print(data)
+          assert data['Result'] == False
 
 if __name__ == '__main__':
     unittest.main()
