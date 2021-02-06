@@ -87,7 +87,7 @@ class BasicTestCase(unittest.TestCase):
           data = json.loads(rv.data)
           #print(data['Status'], data['Error'])
           print(data)
-          assert data['Result'] == False
+          assert data['Result'] == True
 
 if __name__ == '__main__':
     unittest.main()
